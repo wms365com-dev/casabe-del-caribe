@@ -85,6 +85,32 @@
   form button:hover{background:#a83224;}
   .direct{text-align:center;margin-top:22px;font-size:15px;color:#444;} .direct a{color:var(--navy);font-weight:700;text-decoration:none;}
   footer{background:var(--navy);color:#cfd6e4;text-align:center;padding:26px 0;font-size:13px;} footer a{color:#cfd6e4;}
+  /* --- animations (Elementor-style motion) --- */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
+  .hero .kicker{animation:fadeUp .6s ease both;}
+  .hero h1{animation:fadeUp .6s ease .08s both;}
+  .hero p{animation:fadeUp .6s ease .16s both;}
+  .hero-badge{animation:fadeUp .6s ease .24s both;}
+  .hero .btns{animation:fadeUp .6s ease .32s both;}
+  .hero-img{animation:fadeUp .8s ease .18s both;}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.visible{opacity:1;transform:none;}
+  #product .grid .card:nth-child(2){transition-delay:.12s;}
+  #product .grid .card:nth-child(3){transition-delay:.24s;}
+  #why .spec-grid .cell:nth-child(2){transition-delay:.05s;}
+  #why .spec-grid .cell:nth-child(3){transition-delay:.10s;}
+  #why .spec-grid .cell:nth-child(4){transition-delay:.15s;}
+  #why .spec-grid .cell:nth-child(5){transition-delay:.20s;}
+  #why .spec-grid .cell:nth-child(6){transition-delay:.25s;}
+  .card{transition:transform .25s ease,box-shadow .25s ease;}
+  .card:hover{transform:translateY(-6px);box-shadow:0 14px 32px rgba(0,0,0,.12);}
+  .btn{transition:transform .2s ease,box-shadow .2s ease;}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.2);}
+  .chip{transition:transform .2s ease;} .chip:hover{transform:translateY(-3px);}
+  .hero-img img{transition:transform .5s ease;} .hero-img img:hover{transform:scale(1.03);}
+  .nav-cta{transition:transform .2s ease,filter .2s ease;} .nav-cta:hover{transform:translateY(-1px);filter:brightness(1.08);}
+  form button{transition:background .2s ease,transform .2s ease;} form button:hover{transform:translateY(-2px);}
+  @media (prefers-reduced-motion: reduce){.reveal{opacity:1 !important;transform:none !important;transition:none;} .hero .kicker,.hero h1,.hero p,.hero-badge,.hero .btns,.hero-img{animation:none;}}
 </style></head><body>
 
 <header><div class="wrap">
@@ -223,4 +249,16 @@
     wrap.innerHTML='📞  <a href="tel:+'+p.join('')+'" style="color:#1F3864;text-decoration:none;">('+p[1]+') '+p[2]+'-'+p[3]+'</a>';
     wrap.style.display='inline'; this.style.display='none';
   });
+
+  // scroll-reveal (Elementor-style) — fade + rise as sections enter view
+  (function(){
+    var sel='.card, #why .spec-grid .cell, .label-img, .whole-txt, #contact form, #contact .direct, section h2.sec, #product .sub, #contact .sub';
+    var els=document.querySelectorAll(sel);
+    if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('visible');}); return; }
+    els.forEach(function(e){ e.classList.add('reveal'); });
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('visible'); io.unobserve(en.target); } });
+    },{threshold:0.12});
+    els.forEach(function(e){ io.observe(e); });
+  })();
 </script></body></html>
