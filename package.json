@@ -1,0 +1,13 @@
+{
+  "name": "casabe-del-caribe-site",
+  "version": "1.0.0",
+  "description": "One-page wholesale website for Peña Casabe del Caribe (Dominican cassava bread).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED"
+}
