@@ -126,7 +126,7 @@
   <p class="sub">Tell us a little about your business and we'll send current wholesale pricing and arrange a sample.</p>
   <!-- TO ACTIVATE THE FORM: sign up free at https://formspree.io and replace YOUR_FORM_ID below.
        Until then it opens the visitor's email app. Also set your email/phone/WhatsApp in the links below. -->
-  <form id="leadForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+  <form id="leadForm" action="#" method="POST">
     <div class="row2"><input name="name" placeholder="Your name*" required><input name="company" placeholder="Business / store name*" required></div>
     <div class="row2"><input name="email" type="email" placeholder="Email*" required><input name="phone" placeholder="Phone"></div>
     <select name="type"><option value="">I am a… (optional)</option><option>Grocery store / retailer</option>
@@ -135,21 +135,41 @@
     <button type="submit">Send my request</button>
   </form>
   <div class="direct">Prefer to reach us directly?<br>
-    <button id="revealPhone" type="button" style="background:#1F3864;color:#fff;border:none;padding:11px 22px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-top:10px;">📞&nbsp; Click to show phone number</button>
-    <span id="phoneWrap" style="display:none;font-size:20px;font-weight:800;color:#1F3864;"></span></div>
+    ✉️ <a href="mailto:globaldealhunter@gmail.com" style="color:#1F3864;font-weight:700;text-decoration:none;">globaldealhunter@gmail.com</a>
+    <div style="margin-top:14px;">
+      <button id="revealPhone" type="button" style="background:#1F3864;color:#fff;border:none;padding:11px 22px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;">📞&nbsp; Click to show phone number</button>
+      <span id="phoneWrap" style="display:none;font-size:20px;font-weight:800;color:#1F3864;"></span>
+    </div></div>
 </div></section>
 
 <footer><div class="wrap"><b>CasabeDelCaribe.com</b> — Peña "Casabe del Caribe" · Authentic Dominican Cassava Bread · Wholesale in Canada<br>
-  Product of the Dominican Republic. © 2026 [Your Company].</div></footer>
+  Product of the Dominican Republic · <a href="mailto:globaldealhunter@gmail.com" style="color:#cfd6e4;">globaldealhunter@gmail.com</a> · © 2026</div></footer>
 
 <script>
-  var form=document.getElementById('leadForm');
-  form.addEventListener('submit',function(e){
-    if(form.action.indexOf('YOUR_FORM_ID')!==-1){
-      e.preventDefault();var f=form;
-      var body='Name: '+f.name.value+'%0D%0ACompany: '+f.company.value+'%0D%0AEmail: '+f.email.value+'%0D%0APhone: '+f.phone.value+'%0D%0AType: '+f.type.value+'%0D%0AMessage: '+f.message.value;
-      window.location.href='mailto:youremail@example.com?subject=Casabe%20wholesale%20enquiry&body='+body;
+  var SHEET_URL = "GOOGLE_SHEET_WEBAPP_URL";
+  var form = document.getElementById('leadForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (SHEET_URL.indexOf('GOOGLE_SHEET_WEBAPP_URL') !== -1) {
+      var f = form;
+      var body = 'Name: '+f.name.value+'%0D%0ABusiness: '+f.company.value+'%0D%0AEmail: '+f.email.value+'%0D%0APhone: '+f.phone.value+'%0D%0AType: '+f.type.value+'%0D%0AMessage: '+f.message.value;
+      window.location.href = 'mailto:globaldealhunter@gmail.com?subject=Casabe%20wholesale%20enquiry&body='+body;
+      return;
     }
+    var btn = form.querySelector('button');
+    var orig = btn.textContent;
+    btn.textContent = 'Sending…'; btn.disabled = true;
+    fetch(SHEET_URL, { method:'POST', mode:'no-cors', body: new FormData(form) })
+      .then(function(){
+        form.innerHTML = '<div style="text-align:center;background:#e7f6ee;border:1px solid #7bc99b;color:#186c3d;padding:20px;border-radius:8px;font-weight:600;font-size:16px;">Thanks! Your request has been sent — we\'ll be in touch shortly.</div>';
+      })
+      .catch(function(){
+        btn.textContent = orig; btn.disabled = false;
+        var m = document.createElement('div');
+        m.style.cssText = 'text-align:center;color:#a83224;margin-top:10px;font-weight:600;';
+        m.textContent = 'Sorry, something went wrong — please email us instead.';
+        form.appendChild(m);
+      });
   });
 </script>
 <script>
