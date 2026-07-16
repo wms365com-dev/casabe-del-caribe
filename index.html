@@ -135,9 +135,8 @@
     <button type="submit">Send my request</button>
   </form>
   <div class="direct">Prefer to reach us directly?<br>
-    📞 <a href="tel:+1YOURPHONE">[ Your phone ]</a> &nbsp;·&nbsp;
-    ✉️ <a href="mailto:youremail@example.com">[ your email ]</a> &nbsp;·&nbsp;
-    💬 <a href="https://wa.me/1YOURWHATSAPP" target="_blank" rel="noopener">WhatsApp</a></div>
+    <button id="revealPhone" type="button" style="background:#1F3864;color:#fff;border:none;padding:11px 22px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-top:10px;">📞&nbsp; Click to show phone number</button>
+    <span id="phoneWrap" style="display:none;font-size:20px;font-weight:800;color:#1F3864;"></span></div>
 </div></section>
 
 <footer><div class="wrap"><b>CasabeDelCaribe.com</b> — Peña "Casabe del Caribe" · Authentic Dominican Cassava Bread · Wholesale in Canada<br>
@@ -151,5 +150,14 @@
       var body='Name: '+f.name.value+'%0D%0ACompany: '+f.company.value+'%0D%0AEmail: '+f.email.value+'%0D%0APhone: '+f.phone.value+'%0D%0AType: '+f.type.value+'%0D%0AMessage: '+f.message.value;
       window.location.href='mailto:youremail@example.com?subject=Casabe%20wholesale%20enquiry&body='+body;
     }
+  });
+</script>
+<script>
+  document.getElementById('revealPhone').addEventListener('click', function(){
+    var p = ['1','905','867','7882'];
+    var wrap = document.getElementById('phoneWrap');
+    wrap.innerHTML = '📞  <a href="tel:+'+p.join('')+'" style="color:#1F3864;text-decoration:none;">('+p[1]+') '+p[2]+'-'+p[3]+'</a>';
+    wrap.style.display = 'inline';
+    this.style.display = 'none';
   });
 </script></body></html>
